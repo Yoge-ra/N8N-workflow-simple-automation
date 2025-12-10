@@ -17,6 +17,43 @@ To provide a clean, organized place for lightweight automations that anyone can 
 
 Feel free to add your own simple automations or improve existing ones!
 
+---
+## 📥 How to Import a Workflow in n8n (5 Easy Steps)
+
+### 1. Open the n8n Editor
+
+Log in to your n8n Cloud or self-hosted instance and go to the workflow editor.
+<img width="1902" height="813" alt="image" src="https://github.com/user-attachments/assets/4bc1cd73-db4b-4a8f-af59-ce9db233f8c4" />
+
+
+### 2. Click on “Workflows” Menu
+
+On the top menu bar, select Workflows → Import from File / URL.
+<img width="1907" height="777" alt="image" src="https://github.com/user-attachments/assets/bcaa9ace-4370-43e3-b27c-f9af72938edb" />
+
+### 3. Choose Your Import Method
+
+You can import a workflow using:
+
+- JSON file (upload from your computer)
+
+- URL (link to a raw JSON workflow)
+
+- Paste JSON directly
+
+### 4. Upload or Paste Your Workflow
+
+Select your workflow JSON file or paste the JSON code into the editor.
+<img width="1718" height="820" alt="image" src="https://github.com/user-attachments/assets/2de87e91-76d2-4980-8daf-72ef93d51cc0" />
+
+
+### 5. Click “Import”
+
+n8n will load the workflow into the canvas.
+Review the nodes, add credentials if needed, then save and activate.
+<img width="1881" height="858" alt="image" src="https://github.com/user-attachments/assets/95073cd2-0662-4ab3-9e75-6fdf356da2f6" />
+
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Deployment Guide
