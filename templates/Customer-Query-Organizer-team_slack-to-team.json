@@ -1,0 +1,144 @@
+{
+  "name": "Customer-Query-Organizer",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "3b315c7d-b9d3-4de4-b6b5-8320937d4bac",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "D4o1Iuz5pm4imkTh",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "42ef5b03-2eae-4683-a3bf-d025865e06c5",
+      "name": "Send a message",
+      "webhookId": "c02b302b-58a0-4805-80cc-38672ffda55a",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "E2ViSYNKHXH6Lxlk",
+          "name": "Slack account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "1c19ff29-85f8-4c62-9979-cca62cef7c1c",
+      "name": "Send a message1",
+      "webhookId": "11e4f776-6299-4400-99cf-e93e3685d891",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HotvQBZLDUcXLmxF",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "updateFields": {}
+      },
+      "type": "n8n-nodes-base.googleContacts",
+      "typeVersion": 1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "ff1206dc-ff0e-487a-9409-e995f19baa69",
+      "name": "Update a contact"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Update a contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b6f89191-f059-4102-b5d4-8375c1155b1a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cd33b5d01021170e87a001ca30811db83b1ad676879b20b8b93ea61f34aacdee"
+  },
+  "id": "5aeJawFaYJNYxSwk",
+  "tags": []
+}

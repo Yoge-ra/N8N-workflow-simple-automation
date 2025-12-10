@@ -1,0 +1,220 @@
+{
+  "name": "Automated Email - When User Submitted the Form",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Contact Form",
+        "formDescription": "Contact if any problem",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "placeholder": "Your Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "placeholder": "Your Email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Message",
+              "placeholder": "Your issue",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4397fc96-3a6f-41a6-93bc-f4c73a813864",
+      "name": "On form submission",
+      "webhookId": "42220cba-7be2-4333-9ce9-2eac9c7edf31"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1wrRejz1nch4dR_VeKopX0jyb_hfYPuj6Kk9lgpIdFB8",
+          "mode": "list",
+          "cachedResultName": "Customer-data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wrRejz1nch4dR_VeKopX0jyb_hfYPuj6Kk9lgpIdFB8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wrRejz1nch4dR_VeKopX0jyb_hfYPuj6Kk9lgpIdFB8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.Name }}",
+            "Email": "={{ $json.Email }}",
+            "Message": "={{ $json.Message }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "1bd0ecea-554b-4a70-a4ee-1eb7fa75f40e",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "5A0V7juJMydzlK19",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Email }}",
+        "subject": "Thank you for message submission",
+        "emailType": "text",
+        "message": "=Hi  {{ $json.Name }},\n\nThank you for you for reaching us. we are confirmed your message is recived. our executive will contact you soon,",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "4f091103-4a19-4919-968a-bb4814ca3fbf",
+      "name": "Send a message",
+      "webhookId": "1b7f77fa-67c0-44f2-aa01-b5a024c90211",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HotvQBZLDUcXLmxF",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0A1N53DAK1",
+          "mode": "list",
+          "cachedResultName": "all-query-recived"
+        },
+        "text": "=Hi One of our customer submitted the form:\nName :{{ $('Append row in sheet').item.json.Name }}\nEmail: {{ $('Append row in sheet').item.json.Email }}\nMessage:{{ $('Append row in sheet').item.json.Message }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        624,
+        0
+      ],
+      "id": "aafc0d49-e43f-44a0-9eb8-e1606424cf01",
+      "name": "Send a message1",
+      "webhookId": "cd2019ab-cb0f-4053-9933-68eac4ac9ec6",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "B9RYXXXbW3pkjmBr",
+          "name": "Slack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kolkata",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "3823bffb-66bd-4e38-9613-d2f9b155c44f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cd33b5d01021170e87a001ca30811db83b1ad676879b20b8b93ea61f34aacdee"
+  },
+  "id": "CH8U78RqBIUWEg0p",
+  "tags": []
+}
