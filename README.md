@@ -58,7 +58,6 @@ Review the nodes, add credentials if needed, then save and activate.
 
 ## Deployment Guide
 
----
 ### 🌐 Deploy & Use n8n (Official Cloud)
 n8n Cloud is the easiest and fastest way to start using n8n. It requires no installation, no server setup, and no maintenance. Everything runs on the official n8n infrastructure with built-in security and automatic updates.
 <img width="1648" height="831" alt="image" src="https://github.com/user-attachments/assets/9b737aaf-9acb-4772-9a9d-69741a687f1a" />
