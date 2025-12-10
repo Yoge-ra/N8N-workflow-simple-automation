@@ -1,0 +1,74 @@
+{
+  "name": "Backup Notes to Dropbox",
+  "nodes": [
+    {
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "hour": 7,
+              "minute": 0
+            }
+          ]
+        }
+      },
+      "name": "Cron",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "path": "/path/to/your/notes/file.txt",
+        "options": {}
+      },
+      "name": "Read Notes File",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "path": "/backups/notes/{{new Date().toISOString().split('T')[0]}}-file.txt",
+        "binaryData": "data",
+        "options": {}
+      },
+      "name": "Dropbox Upload",
+      "type": "n8n-nodes-base.dropbox",
+      "typeVersion": 1,
+      "position": [650, 300],
+      "credentials": {
+        "dropboxApi": {
+          "id": "1",
+          "name": "Dropbox Account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Cron": {
+      "main": [
+        [
+          {
+            "node": "Read Notes File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Notes File": {
+      "main": [
+        [
+          {
+            "node": "Dropbox Upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
+
