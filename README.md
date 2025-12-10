@@ -19,7 +19,7 @@ Feel free to add your own simple automations or improve existing ones!
 
 ## Disclaimer
 
-All workflows and templates in this repository have been created and tested by the author and work perfectly in the author’s environment. They are provided as templates for general use. While they work fine for the author, any errors or issues that occur while using them are not the responsibility of the author. This disclaimer applies to all workflows and instructions in this repository.
+All workflows and templates in this repository have been created and tested by the author and work perfectly in the author’s environment. They are provided as templates for general use. While they work fine for the author, any errors or issues that occur while using them are not the responsibility of the author. This disclaimer applies to all workflows in this repository.
 
 ---
 ## 📥 How to Import a Workflow in n8n (5 Easy Steps)
