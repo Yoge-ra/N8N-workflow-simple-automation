@@ -1,0 +1,126 @@
+{
+  "name": "Track Time Spent on Tasks",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "2559b4a5-116f-4553-acad-ccb4538b0fe2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d7c0417e-6808-4ca5-991a-bc4e404bcbbb",
+      "name": "start",
+      "webhookId": "2559b4a5-116f-4553-acad-ccb4538b0fe2"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "2559b4a5-116f-4553-acad-ccb4538b0fe2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        16,
+        192
+      ],
+      "id": "1fc37a22-5875-4065-9d5d-5704e4201297",
+      "name": "end",
+      "webhookId": "2559b4a5-116f-4553-acad-ccb4538b0fe2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const start = new Date($json[\"startTime\"]);\nconst end = new Date($json[\"endTime\"]);\nconst duration = (end - start) / 1000 / 60; // minutes\nreturn [{ json: { taskName: $json[\"taskName\"], duration: duration } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        80
+      ],
+      "id": "d0066a6e-4b47-457d-b924-3bf604e89726",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        672,
+        80
+      ],
+      "id": "3d6e6f16-5d8a-4510-8c92-0c7fd891852a",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "5A0V7juJMydzlK19",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "start": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "end": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f8339497-b1fb-4df1-a590-735835bc38aa",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cd33b5d01021170e87a001ca30811db83b1ad676879b20b8b93ea61f34aacdee"
+  },
+  "id": "AZTmjeyB71s70til",
+  "tags": []
+}
