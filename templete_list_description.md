@@ -2,6 +2,13 @@
 
 | Worflow file<br>Name | Description | Template<br>Link |
 |---|---|---|
+|**1_Telegram-Chat-AI-Agent.json**| Simple Telegram AI Assisstant|<a href="https://github.com/Yoge-ra/N8N-workflow-simple-automation/blob/main/templates/1_Telegram-Chat-AI-Agent.json">Link to Template</a>|
+|**2_Customer_relation_gmail_ai_agent.json**| Sending email to customers by simple chat using ai-agent|<a href="https://github.com/Yoge-ra/N8N-workflow-simple-automation/blob/main/templates/2_Customer_relation_gmail_ai_agent.json">Link to Template</a>|
+|**3_Quote_Generator.json**| Automated daily morning quote sender to specified emails|<a href="https://github.com/Yoge-ra/N8N-workflow-simple-automation/blob/main/templates/3_Quote_Generator.json">Link to Template</a>|
+|**4_AI_transcriber.json**| This AI model help you to transcribe your audio file| <a href="https://github.com/Yoge-ra/N8N-workflow-simple-automation/blob/main/templates/4_AI_transcriber.json">Link to Template</a>|
+|**5_AI_Summarizer.json**| When user upload a pdf file, it will go through entire file and search in wikipedia. Finally it gives summarized data into users google-sheet|<a href="https://github.com/Yoge-ra/N8N-workflow-simple-automation/blob/main/templates/5_AI_Summarizer.json">Link to Template</a>|
+|**6_Data_store_system.json**| The worflow help user to extract and store file uploaded during form submission in google-drive|<a href="https://github.com/Yoge-ra/N8N-workflow-simple-automation/blob/main/templates/6_Data_store_system.json">Link to Template</a>|
+|***|***|***|
 |1. Automated Email - When User Submitted the Form-team+slack_gmail.json|When user submit the form it send automated thank you mail. And send notification in team's slack channel| <a href="https://github.com/Yoge-ra/N8N-workflow-simple-automation/blob/main/templates/Automated%20Email%20-%20When%20User%20Submitted%20the%20Form-team%2Bslack_gmail.json">Link to Template</a>|
 |2. Customer-Query-Organizer-team_slack-to-team.json| When user requests updated in sheet, the notification sent in slack channel and Mail sent to user also their contact details updated in google contacts.|<a href="https://github.com/Yoge-ra/N8N-workflow-simple-automation/blob/main/templates/Customer-Query-Organizer-team_slack-to-team.json">Link to Template</a>|
 |3. Daily To-Do Reminder.json| Sends a daily reminder with your tasks.|<a href="https://github.com/Yoge-ra/N8N-workflow-simple-automation/blob/main/templates/Daily%20To-Do%20Reminder.json">ink to Template</a>|
