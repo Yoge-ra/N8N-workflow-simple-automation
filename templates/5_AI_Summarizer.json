@@ -1,0 +1,177 @@
+{
+  "name": "5_AI_Summarizer",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Update Your File",
+        "formDescription": "Please provide a file which need to be summarize.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Docs",
+              "fieldType": "file"
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "092f5772-92b8-40b7-90b8-f6b56cab713f",
+      "name": "On form submission",
+      "webhookId": "c13643e9-17f6-4831-a2fb-a82a6309e1c8"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "Docs",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "14dddffe-2795-4eb5-92cb-7e45cbb220fc",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Summarize this text: {{json.file}}\nUse wikipedia tool for extra details related to our text."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "106d5d32-211f-49d6-8dde-a5616171eb67",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ITuCrKJAxDGypIeS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolWikipedia",
+      "typeVersion": 1,
+      "position": [
+        592,
+        272
+      ],
+      "id": "4a8699c9-c3a3-4f4a-99d0-10b47f620a30",
+      "name": "Wikipedia"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        768,
+        0
+      ],
+      "id": "0a42cb2d-fb04-41a7-83ca-c27539ff5c73",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "5A0V7juJMydzlK19",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wikipedia": {
+      "ai_tool": [
+        [
+          {
+            "node": "Message a model",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c86b86ad-8a48-44b2-ae5b-a6ff095d414e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cd33b5d01021170e87a001ca30811db83b1ad676879b20b8b93ea61f34aacdee"
+  },
+  "id": "3GrGzpMOBwhgD0uS",
+  "tags": []
+}

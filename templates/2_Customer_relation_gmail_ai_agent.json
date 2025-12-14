@@ -1,0 +1,198 @@
+{
+  "name": "2_Customer_relation_gmail_ai_agent",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "399d37a7-0bac-48cf-9b43-dd6860fce79e",
+      "name": "chat",
+      "webhookId": "8d0be9cd-113c-4ef4-be4a-1f2d728c3df2"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=You are a helpful email assisstant with access to send_mail Customer Data tools.When someone ask you to send a email to a person by name, use the Send_mail tool and compose the mail and use Customer Data tool to find their respective email address, finally send the mail.\n\nAlways to helpful and friendly."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "631cac71-4f8d-4ca3-986d-3ef050c03e55",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        48,
+        320
+      ],
+      "id": "72831ee1-0e76-4a70-96ca-1ceae7afaa23",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ITuCrKJAxDGypIeS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        256,
+        224
+      ],
+      "id": "92a92291-c39c-4a61-af88-962f95d16fa2",
+      "name": "Memory"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13t2r6e6oKf1hR7ibd73izxEOBdqQu_f8WRsuWyXHXMg",
+          "mode": "list",
+          "cachedResultName": "Customer_Database_AI_Agent",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13t2r6e6oKf1hR7ibd73izxEOBdqQu_f8WRsuWyXHXMg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13t2r6e6oKf1hR7ibd73izxEOBdqQu_f8WRsuWyXHXMg/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        464,
+        352
+      ],
+      "id": "1eba457b-e0a4-4cf6-aac0-2d928d028ab3",
+      "name": "Customer Data",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "5A0V7juJMydzlK19",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "emailType": "text",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        640,
+        368
+      ],
+      "id": "92e59357-b424-4b49-b49b-34eeb1f76e98",
+      "name": "Send|_mail",
+      "webhookId": "f0f2c2c1-d20f-4514-aa86-2d56f8b80065",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HotvQBZLDUcXLmxF",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "chat": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Data": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send|_mail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a2c15a87-8251-4721-8e3f-edca284ff566",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cd33b5d01021170e87a001ca30811db83b1ad676879b20b8b93ea61f34aacdee"
+  },
+  "id": "O8wIo4j6SnaVwX9e",
+  "tags": []
+}

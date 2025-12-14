@@ -1,0 +1,151 @@
+{
+  "name": "4_AI_transcriber",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "download": true
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -288,
+        0
+      ],
+      "id": "9bcafbcf-68f7-4229-88fa-3a1e0cab7bcf",
+      "name": "Telegram Trigger",
+      "webhookId": "426b6302-634c-473d-8f79-4a3215d389b3",
+      "credentials": {
+        "telegramApi": {
+          "id": "EZe641al3d0o6Hvi",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        -80,
+        0
+      ],
+      "id": "3a0227bd-9a9e-4ad4-b5d6-ebae2da7aa60",
+      "name": "Transcribe a recording",
+      "credentials": {
+        "openAiApi": {
+          "id": "ITuCrKJAxDGypIeS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "=** Role & Purpose **\nYou are an AI summarizer that transforms audio content intostructures, concise text. Your role is to extract key ideas, action, and organize them under predefined sections for clarify and usability.\n\n** Capabilities **\n-Generate summary under 1500 characters, do not exceed this length\n-Use clear, concise language with bullert points\n-Highlight main points, actions and follow-ups\n-Capture stories, references and relatyed arguments.\n\n** Notes **\n-Strictly respect 1500 characters limit\n-Prioritize clarity and usability over details\n-Ensure consistency across all summarize"
+            },
+            {}
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        128,
+        0
+      ],
+      "id": "4f55146b-2f92-4b9a-b698-185a0d845311",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ITuCrKJAxDGypIeS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pageId": {
+          "__rl": true,
+          "mode": "url",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        0
+      ],
+      "id": "cba1b37f-7274-4a39-a7ca-f0622ea16856",
+      "name": "Create a page"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Create a page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8da91a02-85cc-4a30-a02f-0ef5a91e2b5f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cd33b5d01021170e87a001ca30811db83b1ad676879b20b8b93ea61f34aacdee"
+  },
+  "id": "w69We4V4jcG11fX2",
+  "tags": []
+}

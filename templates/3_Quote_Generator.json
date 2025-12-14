@@ -1,0 +1,181 @@
+{
+  "name": "3_Quote_Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -128,
+        -96
+      ],
+      "id": "50b69848-2247-47fe-a1ed-5864d6ac3f9e",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        48,
+        112
+      ],
+      "id": "86ca984e-54bb-4f64-a3c3-e39a4570c5a6",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ITuCrKJAxDGypIeS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Create a Motivational Quote. Without any extra text.",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        112,
+        -96
+      ],
+      "id": "913a29d8-c2fb-4dd0-91e8-3c56b35f2bb1",
+      "name": "Quote Generator"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Gmail }}",
+        "subject": "Quote of the day",
+        "message": "{{ $('Quote Generator').item.json.text }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        656,
+        -96
+      ],
+      "id": "fe990fee-b538-478c-871b-fb4d051a6587",
+      "name": "Send a message",
+      "webhookId": "833c037a-84bd-42dd-aebf-462beb753a3d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "HotvQBZLDUcXLmxF",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13t2r6e6oKf1hR7ibd73izxEOBdqQu_f8WRsuWyXHXMg",
+          "mode": "list",
+          "cachedResultName": "Reciver_Database",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13t2r6e6oKf1hR7ibd73izxEOBdqQu_f8WRsuWyXHXMg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13t2r6e6oKf1hR7ibd73izxEOBdqQu_f8WRsuWyXHXMg/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        464,
+        -96
+      ],
+      "id": "8bc2e3a0-febc-4289-8abe-4a68aab78d12",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "5A0V7juJMydzlK19",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Quote Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Quote Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quote Generator": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c14e1d6c-0610-4d71-8f28-8ee3ba75b66d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cd33b5d01021170e87a001ca30811db83b1ad676879b20b8b93ea61f34aacdee"
+  },
+  "id": "wN1mWVu5Cwl5mzg8",
+  "tags": []
+}
